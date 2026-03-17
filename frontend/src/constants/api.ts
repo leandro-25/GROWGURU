@@ -1,0 +1,16 @@
+export const API_ENDPOINTS = {
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  USUARIOS: '/usuarios',
+  USUARIOS_ME: '/usuarios',
+  CARTEIRA: '/carteira',
+  TRANSACOES: '/transacoes',
+  ESTRATEGIAS: '/estrategias',
+  ESTRATEGIA_ATIVOS: '/estrategias/:id/ativos',
+  VENDER: '/vender',
+  PROFILE: '/profile',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
+} as const;
+
+export const API_TIMEOUT = 10000;

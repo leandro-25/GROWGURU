@@ -1,0 +1,1630 @@
+// Variáveis de cores baseadas na paleta fornecida
+$fundo-principal: #111827; // Cinza bem escuro (gray-900)
+$texto-principal: #F9FAFB; // Quase branco (gray-100)
+$elementos-primarios: #3B82F6; // Azul médio (blue-500)
+$elementos-secundarios: #22C55E; // Verde vibrante (green-500)
+$acentos-destaques: #F59E0B; // Amarelo/Âmbar marcante (amber-500)
+$divisores-bordas: #374151; // Cinza médio (gray-700)
+
+// Efeito glassmorphism limpo e consistente
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+  
+  // Remove pseudo-elements que criam gradientes
+  &::before,
+  &::after {
+    display: none;
+  }
+  
+  // Efeito de hover sutil
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 6px 25px rgba(0, 0, 0, 0.15),
+      inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  }
+}
+
+// Estilos específicos para a página de carteira
+.carteira-page {
+  // Adiciona margem superior ao cabeçalho
+  ion-header {
+    margin-top: 20px;
+  }
+  // Estilos para o carrossel de legenda
+  .legend-container {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    padding: 8px 0;
+    transition: transform 0.5s ease;
+    
+    &.paused {
+      animation-play-state: paused;
+    }
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    min-width: 180px;
+    white-space: nowrap;
+    color: #F9FAFB;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.12);
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    margin: 0 10px;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .legend-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .legend-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% / 5)); } /* Divide por 3 devido à triplicação */
+  }
+
+  // Estado de carregamento
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:active {
+      transform: rotate(180deg);
+    }
+
+    &.rotating {
+      animation: rotate 1s infinite linear;
+    }
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .refresh-icon {
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  // Estilos para os ícones de legenda
+  .legend-icon-1 { background-color: #FF6384; border-radius: 50%; }
+  .legend-icon-2 { background-color: #36A2EB; border-radius: 4px; }
+  .legend-icon-3 { background-color: #FFCE56; border-radius: 2px; border: 1px solid #333; }
+  .legend-icon-4 { background-color: #4BC0C0; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+  .legend-icon-5 { background-color: #9966FF; border-radius: 50%; opacity: 0.9; }
+  .legend-icon-6 { background-color: #FF9F40; border: 1px dashed #fff; }
+  .legend-icon-7 { background-color: #C9CB3F; transform: rotate(45deg); }
+  .legend-icon-8 { background-color: #FF6F61; border-radius: 50%; box-shadow: 0 0 3px #000; }
+  .legend-icon-9 { background-color: #6B7280; clip-path: polygon(0% 0%, 100% 0%, 50% 100%); }
+  .legend-icon-10 { background-color: #34D399; border: 1px dashed #fff; }
+  .legend-icon-11 { background-color: #F472B6; border-radius: 50%; opacity: 0.9; }
+  .legend-icon-12 { background-color: #10B981; border: 1px solid #fff; }
+  .legend-icon-13 { background-color: #60A5FA; clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+  .legend-icon-14 { background-color: #FBBF24; border-radius: 0; }
+  .legend-icon-15 { background-color: #EC4899; border-radius: 50%; box-shadow: 0 0 2px #fff; }
+  .legend-icon-16 { background-color: #4ADE80; border: 1px solid #fff; }
+  .legend-icon-17 { background-color: #F87171; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+  .legend-icon-18 { background-color: #38BDF8; border-radius: 50%; opacity: 0.9; }
+  .legend-icon-19 { background-color: #A78BFA; border: 1px dashed #fff; }
+  .legend-icon-20 { background-color: #FCD34D; clip-path: circle(50% at 50% 50%); }
+  // Estilos para o container do gráfico
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .chart-container {
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    margin: 0 auto 10px;
+    position: relative;
+    padding: 0;
+  }
+
+  .carousel-container {
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+  }
+  background-color: $fundo-principal;
+  color: $texto-principal;
+
+  // Adicionando a imagem de fundo
+  ion-content::part(background) {
+    background-image: url('../assets/imagem/BC1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3; // Opacidade reduzida para não interferir na legibilidade
+  }
+  
+  ion-header {
+    margin-top: 20px;
+    
+    &::after {
+      display: none; // Remove a borda inferior padrão
+    }
+    
+    ion-toolbar {
+      --background: rgba(17, 24, 39, 0.7); // Fundo semi-transparente
+      --color: #{$texto-principal};
+      --border-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        position: relative;
+        
+        .logo-container {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          z-index: 1;
+          
+          .logo-image {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+          }
+          
+          .brand-text {
+            display: flex;
+            align-items: center;
+            
+            .brand-bold {
+              font-size: 1.3rem;
+              font-weight: 600;
+              color: #{$texto-principal};
+            }
+          }
+        }
+        
+        // Texto centralizado absoluto
+        .brand-text.centered {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          align-items: center;
+          
+          .brand-bold {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #{$texto-principal};
+          }
+        }
+      }
+      
+      ion-title {
+        padding: 0 16px;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  ion-content {
+    --background: #{$fundo-principal};
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --padding-top: 20px;
+    --padding-bottom: 20px;
+  }
+
+  // Estado de carregamento
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    
+    ion-spinner {
+      width: 48px;
+      height: 48px;
+      color: $elementos-primarios;
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: rgba($texto-principal, 0.7);
+      font-size: 1rem;
+    }
+  }
+
+  // Resumo da carteira
+  .resumo-container {
+    @include glassmorphism;
+    border-radius: 16px;
+    padding: 24px 16px;
+    margin: 0 0 24px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 60%
+      );
+      opacity: 0.5;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .valor-total {
+      h2 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba($texto-principal, 0.8);
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+      }
+      
+      .valor {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: $acentos-destaques;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(90deg, #F59E0B, #FBBF24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+  }
+
+  // Gráfico de distribuição
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20rem;
+    margin: 0 0 2.5rem 0;
+    @include glassmorphism;
+    border-radius: 24px;
+    padding: 2rem;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 
+      0 12px 32px -8px rgba(0, 0, 0, 0.15),
+      0 4px 16px -4px rgba(0, 0, 0, 0.1),
+      inset 0 1px 2px rgba(255, 255, 255, 0.08);
+    
+    canvas {
+      position: relative;
+      z-index: 2;
+      width: 100% !important;
+      height: 100% !important;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+    }
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 22px;
+      padding: 1px;
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0.12) 0%, 
+        rgba(255,255,255,0.08) 25%, 
+        rgba(255,255,255,0.04) 50%, 
+        rgba(255,255,255,0.02) 75%, 
+        rgba(255,255,255,0.01) 100%);
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      pointer-events: none;
+    }
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 16px 40px -8px rgba(0, 0, 0, 0.2),
+        0 6px 20px -4px rgba(0, 0, 0, 0.12),
+        inset 0 1px 3px rgba(255, 255, 255, 0.12);
+      
+      canvas {
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  // Estado vazio
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    margin: 2rem 0;
+    @include glassmorphism;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    
+    ion-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, $elementos-primarios, lighten($elementos-primarios, 15%));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+      transition: transform 0.3s ease;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      margin: 0 0 2rem;
+      color: rgba($texto-principal, 0.8);
+      max-width: 300px;
+      line-height: 1.5;
+    }
+    
+    .add-button {
+      --background: linear-gradient(135deg, $elementos-primarios, lighten($elementos-primarios, 10%));
+      --color: #ffffff;
+      --border-radius: 10px;
+      --padding-start: 24px;
+      --padding-end: 24px;
+      --padding-top: 14px;
+      --padding-bottom: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px -3px rgba(59, 130, 246, 0.3);
+      transition: all 0.2s ease;
+      text-transform: none;
+      position: relative;
+      overflow: hidden;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      &:hover::after {
+        opacity: 1;
+      }
+      
+      &:hover {
+        --background: linear-gradient(135deg, lighten($elementos-primarios, 5%), lighten($elementos-primarios, 15%));
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px -2px rgba(59, 130, 246, 0.4);
+      }
+      
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px -1px rgba(59, 130, 246, 0.3);
+      }
+    }
+  }
+
+  // Lista de estratégias
+  ion-list {
+    background: transparent !important;
+    --background: transparent !important;
+    padding: 0;
+    margin: 1.5rem 0;
+    
+    ion-item {
+      --background: transparent !important;
+      background: transparent !important;
+    }
+  }
+
+  // Card de estratégia
+  .estrategia-card {
+    @include glassmorphism;
+    border-radius: 16px;
+    margin: 0 12px 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(17, 24, 39, 0.7);
+    
+    &.estrategia-aberta {
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    }
+    
+    .estrategia-header {
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      
+      &:active {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      &-content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .estrategia-titulo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        
+        h2 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0;
+          color: $texto-principal;
+        }
+        
+        .porcentagem {
+          background: rgba($elementos-primarios, 0.2);
+          color: $elementos-primarios;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          font-weight: 600;
+        }
+      }
+      
+      .estrategia-dados {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        .valor-total {
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: $texto-principal;
+        }
+        
+        .toggle-icon {
+          color: rgba($texto-principal, 0.6);
+          font-size: 1.2rem;
+          transition: transform 0.3s ease;
+        }
+      }
+    }
+    
+    &.estrategia-aberta {
+      .toggle-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  // Container de ativos
+  .ativos-container {
+    margin: 0.5rem 16px 16px 16px;
+  }
+
+  // Card de ativo
+  .ativo-card {
+    @include glassmorphism;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 8px 0;
+    position: relative;
+    overflow: visible;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: rgba(31, 41, 55, 0.6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    &:active {
+      transform: scale(0.99);
+    }
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(
+        to bottom, 
+        rgba($elementos-primarios, 0.8), 
+        rgba($elementos-secundarios, 0.8)
+      );
+      z-index: 0;
+    }
+    
+    .ativo-info {
+      position: relative;
+      z-index: 1;
+      background: transparent !important;
+      margin-bottom: 12px;
+      
+      .ativo-cabecalho {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        
+        h3 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0;
+          color: $texto-principal;
+          letter-spacing: 0.3px;
+        }
+        
+        .lucro {
+          font-size: 0.95rem;
+          font-weight: 600;
+          padding: 2px 8px;
+          border-radius: 12px;
+          
+          &.positivo {
+            background: rgba($elementos-secundarios, 0.15);
+            color: $elementos-secundarios;
+          }
+          
+          &.negativo {
+            background: rgba(#ef4444, 0.15);
+            color: #ef4444;
+          }
+        }
+      }
+      
+      .ativo-detalhes {
+        .detalhe-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+          margin-top: 8px;
+          
+          .detalhe-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            transition: all 0.2s;
+            
+            &:active {
+              background: rgba(255, 255, 255, 0.06);
+            }
+            
+            ion-icon {
+              color: $elementos-primarios;
+              font-size: 1.2rem;
+              margin-top: 2px;
+              flex-shrink: 0;
+            }
+            
+            .detalhe-conteudo {
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+              
+              .detalhe-rotulo {
+                font-size: 0.7rem;
+                color: rgba($texto-principal, 0.6);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+              }
+              
+              .detalhe-valor {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: $texto-principal;
+              }
+            }
+            
+            &.detalhe-total {
+              background: rgba($elementos-secundarios, 0.08);
+              
+              ion-icon {
+                color: $elementos-secundarios;
+              }
+              
+              .detalhe-valor {
+                font-weight: 600;
+                color: $elementos-secundarios;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+    --min-height: auto;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --inner-padding-end: 12px;
+    
+    .ativo-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      
+      h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0 0 6px 0;
+        color: $texto-principal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .ativo-detalhes {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        flex: 1;
+        overflow: hidden;
+        
+        .detalhe-item {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.75rem;
+          color: rgba($texto-principal, 0.8);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          
+          ion-icon {
+            font-size: 0.9em;
+            min-width: 14px;
+          }
+          
+          span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    // Container de venda
+    .venda-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: transparent !important;
+      
+      .input-row {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        
+        .input-wrapper {
+          flex: 1;
+          
+          label {
+            display: block;
+            font-size: 0.75rem;
+            color: rgba($texto-principal, 0.7);
+            margin-bottom: 4px;
+            margin-left: 6px;
+          }
+        }
+      }
+      
+      ion-input {
+        @include glassmorphism;
+        --color: #{$texto-principal};
+        --placeholder-color: rgba(#{$texto-principal}, 0.5);
+        --padding-start: 12px;
+        --padding-end: 12px;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+        --border-radius: 8px;
+        --background: rgba(255, 255, 255, 0.05);
+        --border-color: rgba(255, 255, 255, 0.1);
+        --border-width: 1px;
+        --border-style: solid;
+        height: 2.2rem;
+        margin: 0;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+        
+        &::part(native) {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+        }
+        
+        &:focus-within {
+          --background: rgba(255, 255, 255, 0.08);
+          --border-color: $elementos-primarios;
+        }
+        
+        &.quantidade-input {
+          flex: 1 1 100px;
+        }
+        
+        &.preco-input {
+          flex: 1 1 100%;
+        }
+      }
+      
+      .venda-button {
+        @include glassmorphism;
+        background: linear-gradient(135deg, rgba($acentos-destaques, 0.8), darken($acentos-destaques, 10%));
+        color: $texto-principal;
+        font-weight: 500;
+        height: 2.8rem;
+        border-radius: 10px;
+        margin: 4px 0 0;
+        --box-shadow: none;
+        --ripple-color: rgba(255, 255, 255, 0.2);
+        --transition: all 0.2s ease;
+        text-transform: none;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+        margin-top: 6px;
+        --padding-top: 18px;
+        --padding-bottom: 18px;
+        
+        ion-icon {
+          font-size: 1.1em;
+          margin-right: 6px;
+        }
+        
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        &:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        &[disabled] {
+          opacity: 0.6;
+          transform: none !important;
+          background: rgba($acentos-destaques, 0.3);
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  /* Estilos para o carrossel de legenda */
+.legend-container {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: max-content;
+  padding: 8px 0;
+  animation: slide 30s linear infinite;
+
+  &.paused {
+    animation-play-state: paused;
+  }
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  white-space: nowrap;
+}
+
+.legend-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.legend-text {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Estilo global para inputs e ion-inputs */
+:host {
+  --highlight-color-focused: transparent !important;
+  --highlight-background: transparent !important;
+  --border-color: transparent !important;
+  --border-style: none !important;
+  --border-width: 0 !important;
+  --box-shadow: none !important;
+}
+
+/* Remove todos os estilos de foco */
+ion-input,
+ion-input *,
+ion-input::part(native),
+ion-input::part(container),
+ion-input .native-wrapper,
+ion-input .native-input,
+ion-input:focus,
+ion-input:focus-visible,
+ion-input:focus-within,
+ion-input:active,
+ion-input:focus:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  --outline: none !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+  --box-shadow: none !important;
+  --highlight-color-focused: transparent !important;
+  --highlight-background: transparent !important;
+}
+
+/* Remove estilos específicos do input nativo */
+ion-input .native-input {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+  --box-shadow: none !important;
+  --highlight-color-focused: transparent !important;
+  --highlight-background: transparent !important;
+}
+
+/* Remove estilos de foco do input nativo */
+ion-input .native-input {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+}
+
+/* Remove estilos de foco do wrapper do input */
+ion-input .native-wrapper {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  --border-color: transparent !important;
+  --box-shadow: none !important;
+}
+
+/* Remove highlight do input quando em foco */
+ion-input:focus-within {
+  --highlight-color-focused: transparent !important;
+  --highlight-background: transparent !important;
+}
+
+/* Remove outline em todos os estados */
+ion-input:focus,
+ion-input:focus-visible,
+ion-input:focus-within,
+ion-input:active,
+ion-input:focus:active {
+  outline: none !important;
+  box-shadow: none !important;
+  --border-width: 0 !important;
+  --border-style: none !important;
+}
+
+// Modern Strategy List Styles
+.modern-strategy-list {
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.strategy-card {
+  @include glassmorphism;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &.expanded {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.strategy-header {
+  padding: 1.25rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.strategy-header-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.strategy-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  
+  .folder-icon {
+    font-size: 1.5rem;
+    color: #3B82F6;
+  }
+}
+
+.strategy-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.strategy-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: #F9FAFB;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.strategy-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.strategy-percentage {
+  color: #3B82F6;
+  font-weight: 600;
+}
+
+.strategy-value {
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.toggle-arrow {
+  font-size: 1.25rem;
+  color: #6B7280;
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+  
+  .expanded & {
+    transform: rotate(180deg);
+  }
+}
+
+// Barra de progresso com estilo glassmorphism e gradiente
+.progress-container {
+  @include glassmorphism;
+  height: 6px;
+  border-radius: 3px;
+  margin-top: 1rem;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #3B82F6 0%,     // Azul
+    #22C55E 50%,    // Verde
+    #F59E0B 100%    // Amarelo
+  );
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  
+  // Efeito sutil de brilho
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
+    animation: shimmer 3s infinite ease-in-out;
+  }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+// Chart Container
+.chart-container {
+  width: 100%;
+  max-width: 100%;
+  height: 260px;
+  margin: 1.5rem 0;
+  position: relative;
+  border-radius: 16px;
+  padding: 1.25rem;
+  @include glassmorphism;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 200px;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 380px) {
+    height: 240px;
+    padding: 1rem;
+    
+    canvas {
+      max-height: 180px;
+    }
+  }
+}
+
+// Assets Container
+.assets-container {
+  padding: 0 0.5rem 0.5rem;
+  animation: fadeIn 0.3s ease;
+  
+  > * + * {
+    margin-top: 0.75rem;
+  }
+}
+
+.asset-card {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.25s ease;
+  
+  .asset-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .asset-details {
+    margin: 1rem 0;
+  }
+  
+  .asset-actions {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  &:hover {
+    background: rgba(30, 41, 59, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.asset-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.asset-symbol {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.symbol-badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3B82F6;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.profit-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  
+  &.profit {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22C55E;
+  }
+  
+  &.loss {
+    background: rgba(239, 68, 68, 0.15);
+    color: #EF4444;
+  }
+}
+
+.asset-value {
+  font-weight: 600;
+  color: #F9FAFB;
+  font-size: 1.1rem;
+}
+
+// Asset Details Grid
+.asset-details {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  
+  .detail-row {
+    display: contents;
+  }
+  
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 0;
+    height: 85px;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    position: relative;
+    
+    &:active {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  .detail-icon {
+    font-size: 1.2rem;
+    color: #6B7280;
+    margin: 0 0 0.3rem 0;
+    flex-shrink: 0;
+    display: block;
+    line-height: 1;
+  }
+  
+  .detail-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0.5rem 0.3rem;
+    box-sizing: border-box;
+    position: relative;
+    top: -2px; /* Ajuste fino para compensar o espaço do ícone */
+  }
+  
+  .detail-label {
+    display: block;
+    font-size: 1.05rem;
+    color: #9CA3AF;
+    margin: 0 0 0.1rem 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+  }
+  
+  .detail-value {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #E5E7EB;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    display: block;
+    margin-top: 0.1rem;
+  }
+}
+
+// Sell Action
+.asset-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.action-inputs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.input-group {
+  flex: 1;
+  
+  label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #E5E7EB;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+  }
+}
+
+.modern-input {
+  --background: rgba(255, 255, 255, 0.05);
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 0.85rem;
+  --padding-bottom: 0.85rem;
+  --border-radius: 12px;
+  --color: #F9FAFB;
+  --placeholder-color: #9CA3AF;
+  --placeholder-opacity: 0.8;
+  font-size: 1.05rem;
+  font-weight: 500;
+  /*border: 1px solid rgba(255, 255, 255, 0.1);*/
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  &:focus-within {
+    --background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+}
+
+// Estilo para o botão de venda
+ion-button[color="danger"] {
+  --border-radius: 12px;
+  --padding-top: 0.9rem;
+  --padding-bottom: 0.9rem;
+}
+
+// Botão nativo de venda (alternativa ao ion-button)
+.sell-button-native {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    background: linear-gradient(135deg, #d97706, #b45309);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    transform: none !important;
+    background: rgba(245, 158, 11, 0.3);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s ease-in;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+// Responsive Adjustments
+@media (max-width: 380px) {
+  .action-inputs {
+    flex-direction: column;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+  }
+}
+
+// Override default Ionic styles
+/* Removido para não afetar o botão de venda */
+  
+  // Ajustes para telas menores
+  @media (max-width: 768px) {
+    .resumo-container {
+      padding: 10px;
+      /*margin: 0 8px 12px;*/
+      border-radius: 10px;
+      
+      .valor-total .valor {
+        font-size: 1.5rem;
+      }
+    }
+    
+    .chart-container {
+      height: 220px;
+      margin: 0 8px 16px;
+      padding: 12px;
+    }
+    
+    .estrategias-list {
+      margin: 0 4px;
+    }
+    
+    .estrategia-card {
+      margin: 0 4px 12px;
+      border-radius: 10px;
+    }
+    
+    .ativos-container {
+      margin: 0.25rem 8px 8px 8px;
+    }
+    
+    .ativo-card {
+      padding: 10px;
+      margin: 6px 0;
+      border-radius: 8px;
+      
+      .ativo-info {
+        h3 {
+          font-size: 0.9rem;
+          margin-bottom: 4px;
+        }
+        
+        .ativo-detalhes {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          
+          .detalhe-item {
+            font-size: 0.7rem;
+            gap: 3px;
+            
+            ion-icon {
+              font-size: 0.8em;
+            }
+          }
+        }
+      }
+      
+      .venda-container {
+        padding-top: 6px;
+        margin-top: 6px;
+        gap: 6px;
+        
+        .input-group {
+          flex-direction: column;
+          gap: 6px;
+        }
+        
+        ion-input {
+          width: 100% !important;
+          min-width: 100% !important;
+          flex: 1 1 auto !important;
+          height: 2.2rem;
+          font-size: 0.8rem;
+        }
+        
+        .venda-button {
+          height: 2.4rem;
+          font-size: 0.85rem;
+        }
+      }
+    }
+    
+    // Ajuste para telas muito pequenas
+    @media (max-width: 360px) {
+      .resumo-container {
+        padding: 8px;
+        
+        .valor-total .valor {
+          font-size: 1.3rem;
+        }
+      }
+      
+      .ativo-card {
+        .ativo-info {
+          h3 {
+            font-size: 0.85rem;
+          }
+          
+          .ativo-detalhes .detalhe-item {
+            font-size: 0.68rem;
+          }
+        }
+        
+        .venda-container {
+          ion-input {
+            height: 2.1rem;
+            font-size: 0.78rem;
+          }
+          
+          .venda-button {
+            height: 2.3rem;
+            font-size: 0.82rem;
+          }
+        }
+      }
+    }
+  }
+}
+// Estilos para o cabeçalho - PADRONIZADO
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  position: relative;
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1;
+    
+    .logo-image {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+    
+    .brand-text {
+      display: flex;
+      align-items: center;
+      
+      .brand-bold {
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: $texto-principal;
+      }
+    }
+  }
+  
+  // Texto centralizado absoluto
+  .brand-text.centered {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    
+    .brand-bold {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: $texto-principal;
+    }
+  }
+}

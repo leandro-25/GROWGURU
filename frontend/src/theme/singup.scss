@@ -1,0 +1,94 @@
+.signup-page {
+  @apply bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 h-screen overflow-hidden;
+
+  // Adicionando a imagem de fundo
+  ion-content::part(background) {
+    background-image: url('../assets/imagem/BC1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3; // Opacidade reduzida para não interferir na legibilidade
+  }
+
+  .signup-container {
+    @apply h-full flex items-center justify-center;
+  }
+
+  .signup-box {
+    @apply w-full max-w-md px-6;
+  }
+
+  .logo-wrapper {
+    @apply flex justify-center mb-6 -mt-20;
+
+    img {
+      @apply h-40 w-auto;
+    }
+  }
+
+  .title {
+    @apply text-xl sm:text-2xl font-bold text-gray-100 mb-6 text-center;
+  }
+
+  .signup-form {
+    @apply space-y-7;
+
+    .form-group {
+      @apply space-y-2;
+
+      label {
+        @apply block text-sm font-semibold;
+        color: #ffffff; // Stronger white for labels
+      }
+
+      .input-wrapper {
+        @apply relative flex items-center;
+
+        ion-input {
+          @apply w-full px-4 py-3 bg-gray-800/50 rounded-lg border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-100;
+          --padding-start: 1.25rem;
+          --padding-end: 1.25rem;
+          --padding-top: 0.875rem;
+          --padding-bottom: 0.875rem;
+        }
+
+        .toggle-password {
+          @apply absolute right-3 cursor-pointer z-10 text-gray-400 hover:text-orange-400 top-1/2 -translate-y-1/2 flex items-center;
+        }
+      }
+
+      .error-message {
+        @apply mt-1 text-sm text-red-500;
+      }
+    }
+
+    .submit-button {
+      @apply w-full py-3.5 px-4 text-white font-semibold rounded-lg transition-all transform hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2;
+      background: linear-gradient(135deg, #e9304f 0%, #ff8f42 50%, #1ab6b0 100%);
+      font-size: 1.125rem; /* Increased font size */
+      &:hover {
+        background: linear-gradient(135deg, #d62b48 0%, #f88539 50%, #17a29d 100%);
+      }
+
+      ion-spinner {
+        @apply w-5 h-5;
+      }
+    }
+
+    .login-container {
+      @apply mt-8 text-center;
+
+      p {
+        @apply text-sm text-gray-400;
+
+        .login-link {
+          @apply font-medium;
+          color: #ff8f42; // Orange from the logo gradient
+          &:hover {
+            color: #ff7a2d; // Slightly darker on hover
+          }
+        }
+      }
+    }
+  }
+}

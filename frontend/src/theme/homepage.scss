@@ -1,0 +1,1307 @@
+// =============================================================================
+// HOMEPAGE - OPTIMIZED SCSS
+// Mantém UI idêntica com performance otimizada
+// =============================================================================
+
+// Variáveis com a paleta de cores especificada usando SASS
+$fundo-principal: #111827;
+$texto-principal: #F9FAFB;
+$elementos-primarios: #3B82F6;
+$elementos-secundarios: #22C55E;
+$acentos-destaques: #F59E0B;
+$divisores-bordas: #374151;
+
+// Cores para indicadores
+$cor-lucro: #FFFFFF;
+$cor-prejuizo: #FFFFFF;
+$cor-neutro: #FFFFFF;
+
+// Performance mixins
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Estilos para o rodapé seguro em dispositivos com notch */
+.safe-area-spacer {
+  height: env(safe-area-inset-bottom, 0);
+  width: 100%;
+  background: transparent;
+  pointer-events: none;
+  contain: layout;
+}
+
+// Estilos base para todos os elementos
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Estilos globais da página
+.home-page {
+  background-color: $fundo-principal;
+  color: $texto-principal;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  contain: layout style paint;
+  
+  ion-content {
+    --padding-bottom: calc(env(safe-area-inset-bottom, 0) + 20px);
+    -webkit-overflow-scrolling: touch;
+    contain: layout style;
+  }
+
+  // Adicionando a imagem de fundo
+  ion-content::part(background) {
+    background-image: url('../assets/imagem/BC1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+    will-change: opacity;
+  }
+  
+  ion-header {
+    &::after {
+      display: none; // Remove a linha de borda inferior padrão
+    }
+    
+    ion-toolbar {
+      --background: rgba(17, 24, 39, 0.7); // Fundo semi-transparente
+      --color: #{$texto-principal};
+      --border-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      
+      // Seção de transações
+      .transactions-section {
+        // Removendo posicionamento fixo e outros estilos conflitantes
+        position: static;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin: 0 !important; // Removendo margens
+        padding: 0.5rem 0 0 0 !important; // Espaçamento mínimo no topo
+        
+        .transactions-list {
+          flex: 1;
+          overflow-y: auto;
+          padding-right: 0.25rem;
+          margin-right: -0.5rem;
+          padding-left: 0.25rem;
+          margin-left: -0.5rem;
+          padding-bottom: 1rem;
+          margin-top: 0.5rem;
+          
+          /* Estilização da barra de rolagem */
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+          
+          &::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+          }
+          
+          &::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+          }
+          
+          &::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+          }
+          
+          @media (min-width: 768px) {
+            margin-top: 0.75rem;
+          }
+        }
+        
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+          
+          .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            
+            @media (min-width: 375px) {
+              font-size: 1.25rem;
+            }
+          }
+          
+          .see-more {
+            background: none;
+            border: none;
+            color: $elementos-primarios;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+            
+            &:active {
+              background-color: rgba(59, 130, 246, 0.1);
+            }
+          }
+        }
+      }
+      
+      ion-title {
+        padding: 0 16px;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  ion-content {
+    --background: transparent;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --overflow: hidden;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+// Container de conteúdo
+.content-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0; // Removido o padding lateral para o cartão ocupar mais largura
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  
+  // Garantir que o conteúdo não fique muito próximo das bordas em telas pequenas
+  padding-left: max(3%, env(safe-area-inset-left));
+  padding-right: max(3%, env(safe-area-inset-right));
+  padding-bottom: 0;
+  
+  @media (min-width: 375px) {
+    padding: 1rem 8%;
+  }
+  
+  @media (min-width: 768px) {
+    max-width: 768px;
+    padding: 1rem 2rem;
+  }
+  
+  @media (min-width: 1024px) {
+    max-width: 960px;
+    padding: 1rem 2.5rem;
+  }
+  
+  @media (min-width: 1280px) {
+    max-width: 1200px;
+  }
+}
+
+// Header
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  margin-top: 1px;
+  background-color: transparent !important;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: transparent !important;
+}
+
+.logo-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  
+  @media (min-width: 375px) {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.brand-text {
+  font-size: 1.25rem; // 20px
+  color: #FFFFFF;
+  background-color: transparent !important;
+  
+  @media (min-width: 375px) {
+    font-size: 1.5rem; // 24px
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 1.75rem; // 28px
+  }
+}
+
+.brand-bold {
+  font-weight: 700;
+  background-color: transparent !important;
+}
+
+.welcome-title {
+  text-align: right;
+  font-size: 16px;
+  background-color: transparent !important;
+}
+
+.welcome-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #{$texto-principal};
+}
+
+// Melhorias de acessibilidade para leitores de tela
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Estilo do cartão de saldo
+.balance-card {
+  position: relative;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.75rem;
+  margin: 0 !important; // Removendo todas as margens
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc(100% + 0.5rem); // Reduzindo a largura
+  margin-left: -0.25rem !important; // Ajustando a margem
+  margin-right: -0.25rem !important; // Ajustando a margem
+  
+  @media (min-width: 375px) {
+    padding: 1.25rem 1.75rem;
+    min-height: 180px;
+    width: calc(100% + 1.5rem);
+    margin-left: -0.75rem !important;
+    margin-right: -0.75rem !important;
+  }
+  
+  @media (min-width: 768px) {
+    min-height: 200px;
+    padding: 1.5rem 2rem;
+    width: calc(100% + 2rem);
+    margin-left: -1rem !important;
+    margin-right: -1rem !important;
+  }
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  color: white;
+  transition: transform 0.2s ease-out;
+  
+  @media (min-width: 768px) {
+    padding: 2rem;
+    min-height: 220px;
+  }
+  
+  &:hover {
+    transform: scale(1.01);
+    
+    @media (max-width: 767px) {
+      transform: none; // Remove o efeito hover em telas menores
+    }
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: 
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(to bottom right, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 30%);
+  z-index: 1;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+.card-logo {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: auto;
+  opacity: 0.8;
+  z-index: 2;
+}
+
+.user-info {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.user-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #{$texto-principal};
+  margin: 0;
+}
+
+.account-date {
+  font-size: 0.875rem;
+  color: rgba(249, 250, 251, 0.8);
+  margin: 0.25rem 0 0 0;
+}
+
+.balance-info {
+  margin: 1rem 0; /* Ajustando a margem vertical */
+  position: relative;
+  z-index: 3;
+  
+  .balance-label {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .balance-value {
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .balance-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem; /* Aumentando o espaçamento entre os itens */
+    width: 100%;
+    
+    .balance-item {
+      flex: 1;
+      
+      .balance-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 0.4rem; /* Ajustando o espaçamento abaixo do rótulo */
+        font-weight: 500; /* Deixando o texto um pouco mais destacado */
+      }
+      
+      .balance-value {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.3; /* Melhorando a altura da linha */
+      }
+    }
+  }
+}
+
+// Estilos antigos removidos - substituídos pelo novo layout
+
+// Seção de transações - Estilos base
+.transactions-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1.5rem 1.5rem 0 0;
+  padding: 1.25rem 1rem 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  margin: 1rem -1rem 0 -1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Permite que o flex funcione corretamente */
+  max-height: 70vh; /* Altura máxima de 70% da viewport */
+  overflow: hidden;
+  
+  @media (min-height: 700px) {
+    max-height: 65%;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+    
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+      color: $texto-principal;
+      
+      @media (min-width: 375px) {
+        font-size: 1.25rem;
+      }
+    }
+    
+    .see-more {
+      background: none;
+      border: none;
+      color: $elementos-primarios;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      
+      &:active {
+        background: rgba(59, 130, 246, 0.1);
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0 0 0;
+    min-height: 40vh; /* Altura um pouco menor em telas maiores */
+  }
+}
+
+// Cabeçalho da seção de transações
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1rem 0;
+  padding: 0 10px;
+  height: 40px;
+  
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    color: #fff;
+  }
+  
+  .see-more {
+    background: none;
+    border: none;
+    color: #F59E0B !important;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+    
+    &:hover, &:focus {
+      opacity: 0.9;
+      color: #F59E0B !important;
+    }
+    
+    &:active {
+      opacity: 0.8;
+    }
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #{$texto-principal};
+}
+
+/* Melhorias na lista de transações */
+// Melhorias na acessibilidade e toque
+button, [role="button"] {
+  cursor: pointer;
+  touch-action: manipulation; // Melhora a resposta ao toque
+  min-height: 44px; // Tamanho mínimo recomendado para toque
+  min-width: 44px;
+}
+
+// Melhorias na lista de transações
+.transactions-list {
+  margin: 1rem 0.5rem 0; // Adiciona margem nas laterais
+  
+  // Melhorar a acessibilidade do foco
+  *:focus-visible {
+    outline: 2px solid $elementos-primarios;
+    outline-offset: 2px;
+  }
+  -webkit-overflow-scrolling: touch; // Melhora a rolagem em iOS
+  
+  .transaction-item {
+    padding: 0.75rem 1rem; // Adiciona padding horizontal
+    margin: 0.25rem 0; // Adiciona margem vertical entre os itens
+    border-radius: 8px; // Cantos arredondados
+    background-color: rgba(255, 255, 255, 0.03); // Fundo sutil para o item
+    
+    @media (min-width: 768px) {
+      padding: 1rem 1.25rem; // Mais espaço em telas maiores
+    }
+    
+    .transaction-info {
+      gap: 0.75rem;
+      
+      @media (min-width: 768px) {
+        gap: 1rem;
+      }
+      
+      .transaction-icon {
+        font-size: 28px !important;
+        width: 28px !important;
+        height: 28px !important;
+        margin-right: 0.5rem; // Adiciona espaço à direita do ícone
+        
+        @media (min-width: 375px) {
+          font-size: 32px !important;
+          width: 32px !important;
+          height: 32px !important;
+          margin-right: 0.75rem; // Um pouco mais de espaço em telas maiores
+        }
+      }
+      
+      .transaction-text {
+        .transaction-type {
+          font-size: 0.95rem;
+          font-weight: 500;
+          margin: 0 0 0.25rem 0;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          
+          @media (min-width: 375px) {
+            font-size: 1rem;
+          }
+        }
+        
+        .transaction-description {
+          font-size: 0.8rem;
+          margin: 0.15rem 0;
+          
+          @media (min-width: 375px) {
+            font-size: 0.85rem;
+          }
+        }
+        
+        .transaction-date {
+          font-size: 0.75rem;
+          
+          @media (min-width: 375px) {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+    
+    .transaction-amount {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-left: 0.5rem; // Adiciona espaço à esquerda do preço
+      padding-right: 0.25rem; // Adiciona um pequeno espaço à direita
+      
+      @media (min-width: 375px) {
+        font-size: 1rem;
+        margin-left: 0.75rem; // Um pouco mais de espaço em telas maiores
+        padding-right: 0.5rem;
+      }
+      
+      &.income {
+        color: $cor-lucro;
+      }
+      
+      &.expense {
+        color: $cor-prejuizo;
+      }
+    }
+  }
+}
+
+/* Esconde a barra de rolagem para Chrome, Safari e Opera */
+.transactions-list::-webkit-scrollbar {
+  display: none;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  color: rgba(156, 163, 175, 0.8);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  // Sombra dinâmica inicial (sutil)
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Ripple Effect para .transaction-item
+.transaction-item::after {
+  content: "";
+  background: rgba(255, 255, 255, 0.2);
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  padding-top: 350%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s;
+  transform: scale(0);
+  pointer-events: none;
+}
+
+.transaction-item:active::after {
+  padding-top: 0;
+  padding-left: 0;
+  margin-left: 0;
+  margin-top: 0;
+  opacity: 1;
+  transition: 0s;
+  transform: scale(1);
+}
+
+.transaction-info {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.transaction-icon {
+  /* Estilo do ícone sem fundo */
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Estilo do ícone */
+  ion-icon {
+    font-size: 32px; /* Tamanho aumentado do ícone */
+    width: 32px;
+    height: 32px;
+    display: block;
+    color: var(--ion-color-warning); /* Cor do ícone */
+  }
+}
+
+.transaction-text {
+  flex: 1;
+  min-width: 0; /* Garante que o texto não vaze do container */
+}
+
+.transaction-type {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ion-text-color);
+  line-height: 1.2;
+}
+
+.transaction-description {
+  font-size: 0.875rem;
+  color: #9CA3AF;
+  margin: 2px 0 0 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transaction-date {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin: 0;
+}
+
+.transaction-amount {
+  position: static;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #EF4444; // Vermelho para saídas (padrão)
+}
+
+.income {
+  color: #10B981 !important; // Verde para entradas (vendas)
+}
+
+.expense {
+  color: #EF4444 !important; // Vermelho para saídas (compras)
+}
+
+// Animações
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animações para os elementos
+.balance-card {
+  animation: fadeIn 0.5s ease-out forwards;
+  margin-bottom: 1rem !important; /* Aumentado de 0.25rem para 1rem */
+  
+  @media (min-width: 768px) {
+    margin-bottom: 1.25rem !important; /* Um pouco mais de espaço em telas maiores */
+  }
+}
+
+.transactions-section {
+  animation: fadeIn 0.5s ease-out 0.1s forwards;
+  opacity: 0;
+  transform: translateY(10px);
+  margin-top: 0.75rem; /* Adicionado espaço acima da seção de transações */
+  
+  @media (min-width: 768px) {
+    margin-top: 1rem; /* Um pouco mais de espaço em telas maiores */
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.transaction-item {
+  animation: fadeIn 0.3s ease-out forwards;
+  animation-delay: calc(var(--index, 0) * 0.05s);
+}
+
+// Adicionar destaque para elementos interativos
+.interactive-element {
+  color: var(--acentos-destaques);
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: #FBBF24;
+  }
+}
+
+// Botões com a cor primária
+.primary-button {
+  background-color: #{$elementos-primarios};
+  color: #{$texto-principal};
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: #2563EB;
+  }
+  
+  &:focus {
+    outline: 2px solid #{$acentos-destaques};
+    outline-offset: 2px;
+  }
+}
+
+// Adicionar estilos para Skeleton Screens e Shimmer Effect
+// Estilos para indicadores de rentabilidade
+.profit {
+  color: $cor-lucro; // Verde para rentabilidade positiva
+}
+
+/* Estilos movidos do HomePage.vue */
+.brand-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.profile-button-top {
+  background: linear-gradient(135deg, #e9304f 0%, #ff8f42 50%, #1ab6b0 100%);
+  border: none;
+  border-radius: 50%;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  width: 48px;
+  height: 48px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.profile-icon {
+  color: white;
+  font-size: 20px;
+}
+
+/* Menu de botões flutuantes */
+.floating-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 60px 16px 0;
+  pointer-events: none;
+}
+
+.floating-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+  opacity: 0;
+  animation: fadeIn 0.2s ease forwards;
+  pointer-events: auto;
+}
+
+.floating-menu-buttons {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+  background: #1F2937;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: slideIn 0.2s ease 0.1s forwards;
+  pointer-events: auto;
+}
+
+.floating-menu-button {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: #F9FAFB;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-icon {
+    margin-right: 12px;
+    font-size: 1.2rem;
+    color: #9CA3AF;
+    transition: color 0.2s ease;
+  }
+
+  &:hover .menu-icon {
+    color: #3B82F6;
+  }
+
+  &.logout-button {
+    .menu-icon {
+      color: #F87171;
+    }
+
+    &:hover .menu-icon {
+      color: #EF4444;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Estilos para o menu de perfil */
+.profile-menu-list::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.profile-menu-popover {
+  --width: 200px;
+  --max-width: 85vw;
+  --backdrop-opacity: 0.7;
+}
+
+.profile-menu-content {
+  --background: #1F2937;
+  --padding: 8px 0;
+  --border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid #374151;
+}
+
+.profile-menu-list {
+  --ion-item-background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+}
+
+.profile-menu-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 48px;
+  --background: transparent;
+  --background-activated: rgba(59, 130, 246, 0.15);
+  --background-hover: rgba(59, 130, 246, 0.1);
+  --ripple-color: #3B82F6;
+  --color: #F9FAFB;
+  --border-color: #374151;
+  --inner-border-width: 0 0 1px 0;
+  margin: 0;
+  transition: background-color 0.2s ease;
+
+  .menu-icon {
+    color: #9CA3AF;
+    transition: color 0.2s ease;
+  }
+
+  &:hover .menu-icon {
+    color: #3B82F6;
+  }
+
+  &.logout-item {
+    --background-activated: rgba(239, 68, 68, 0.15);
+    --ripple-color: #EF4444;
+
+    .menu-icon {
+      color: #F87171;
+    }
+
+    &:hover .menu-icon {
+      color: #EF4444;
+    }
+  }
+}
+
+ion-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #F9FAFB;
+}
+
+.loss {
+  color: $cor-prejuizo; // Vermelho para rentabilidade negativa
+}
+
+.neutral {
+  color: $cor-neutro; // Cinza para estado neutro/zero
+}
+
+// Estilos para o indicador de carregamento
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: var(--ion-color-medium);
+  
+  ion-spinner {
+    margin-bottom: 10px;
+    --color: var(--ion-color-primary);
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.9em;
+  }
+}
+
+// Estilo para quando o conteúdo está carregando
+.content-loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.skeleton-transaction-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-bottom: 1px solid var(--divisores-bordas);
+  background-color: rgba(55, 65, 81, 0.5);
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton-line {
+  background-color: rgba(75, 85, 99, 0.8);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  height: 1em;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line.title {
+  width: 60%;
+  height: 1.2em;
+}
+
+.skeleton-line.text {
+  width: 80%;
+}
+
+.skeleton-line.small-text {
+  width: 40%;
+  height: 0.8em;
+  margin-bottom: 0;
+}
+
+// Shimmer Effect
+.skeleton-line::before,
+.skeleton-transaction-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(107, 114, 128, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmer-animation 1.5s infinite linear;
+}
+
+@keyframes shimmer-animation {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+// Card de saldo com gradiente dinâmico alternando posições
+.balance-card {
+  position: relative;
+  background: linear-gradient(90deg, 
+    rgba(255, 65, 108, 0.8), 
+    rgba(255, 75, 43, 0.8), 
+    rgba(247, 151, 30, 0.8), 
+    rgba(255, 210, 0, 0.8));
+  background-size: 400% 100%;
+  animation: gradientAlternate 15s linear infinite;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(255, 65, 108, 0.2), 0 8px 10px -6px rgba(255, 75, 43, 0.1);
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  @include smooth-transition;
+  @include hardware-acceleration;
+  contain: layout style paint;
+  
+  &:hover {
+    transform: scale(1.02) translateZ(0);
+    box-shadow: 0 12px 30px -5px rgba(255, 65, 108, 0.25), 0 10px 15px -6px rgba(255, 75, 43, 0.15);
+  }
+
+  &:active {
+    transform: scale(0.98) translateZ(0);
+  }
+}
+
+// Animação para alternar as posições das cores no gradiente
+@keyframes gradientAlternate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Performance optimizations
+.home-page,
+.balance-card,
+.safe-area-spacer {
+  contain: layout style paint;
+}
+
+// Responsive optimizations
+@media (max-width: 768px) {
+  .balance-card {
+    height: 160px;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .balance-card {
+    height: 140px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}

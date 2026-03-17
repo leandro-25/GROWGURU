@@ -1,0 +1,218 @@
+// =============================================================================
+// LOGIN PAGE - OPTIMIZED SCSS
+// Mantém UI idêntica com performance otimizada
+// =============================================================================
+
+// Performance mixins
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.login-page {
+  @apply bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 h-screen overflow-hidden;
+  contain: layout style paint;
+
+  // Adicionando a imagem de fundo
+  ion-content::part(background) {
+    background-image: url('../assets/imagem/BC1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+    will-change: opacity;
+  }
+  
+  .login-container {
+    @apply h-full flex items-center justify-center;
+    @include hardware-acceleration;
+  }
+
+  .login-box {
+    @apply w-full max-w-md px-6;
+    contain: layout style;
+    @include hardware-acceleration;
+  }
+
+  .logo-wrapper {
+    @apply flex justify-center mb-6 -mt-20;
+    @include hardware-acceleration;
+
+    img {
+      @apply h-40 w-auto;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+  }
+
+  .title {
+    @apply text-xl sm:text-2xl font-bold text-gray-100 mb-6 text-center;
+    contain: layout style;
+  }
+
+  .login-form {
+    @apply space-y-7;
+    contain: layout style;
+
+    .form-group {
+      @apply space-y-2;
+      contain: layout style;
+
+      label {
+        @apply block text-sm font-semibold;
+        color: #ffffff;
+        contain: layout style;
+      }
+
+      .input-wrapper {
+        @apply relative flex items-center;
+        @include hardware-acceleration;
+
+        ion-input {
+          @apply w-full px-4 py-3 bg-gray-800/50 rounded-lg border border-gray-700 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-100;
+          --padding-start: 1.25rem;
+          --padding-end: 1.25rem;
+          --padding-top: 0.875rem;
+          --padding-bottom: 0.875rem;
+          @include smooth-transition;
+          @include hardware-acceleration;
+        }
+
+        .toggle-password {
+          @apply absolute right-3 cursor-pointer z-10 text-gray-400 hover:text-orange-400 top-1/2 -translate-y-1/2 flex items-center;
+          @include smooth-transition;
+          @include hardware-acceleration;
+        }
+      }
+
+      .error-message {
+        @apply mt-1 text-sm text-red-500;
+        contain: layout style;
+      }
+    }
+
+    .remember-section {
+      @apply flex items-center justify-between;
+      contain: layout style;
+
+      .remember-checkbox {
+        @apply flex items-center;
+        @include hardware-acceleration;
+
+        ion-checkbox {
+          @apply text-orange-400 border-gray-600 rounded-lg focus:ring-orange-500;
+          @include smooth-transition;
+        }
+
+        span {
+          @apply ml-2 text-sm text-gray-300;
+          contain: layout style;
+        }
+      }
+
+      .forgot-link {
+        @apply text-sm font-medium;
+        color: #ff8f42;
+        @include smooth-transition;
+        @include hardware-acceleration;
+        &:hover {
+          color: #ff7a2d;
+          transform: translateY(-1px) translateZ(0);
+        }
+      }
+    }
+    .submit-button {
+      @apply w-full py-3.5 px-4 text-white font-semibold rounded-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2;
+      background: linear-gradient(135deg, #e9304f 0%, #ff8f42 50%, #1ab6b0 100%);
+      font-size: 1.125rem;
+      @include smooth-transition;
+      @include hardware-acceleration;
+      contain: layout style;
+      
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #d62b48 0%, #f88539 50%, #17a29d 100%);
+        transform: translateY(-2px) translateZ(0);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0) translateZ(0);
+      }
+
+      ion-spinner {
+        @apply w-5 h-5;
+        transform: translateZ(0);
+      }
+    }
+    .signup-container {
+      @apply mt-8 text-center;
+      contain: layout style;
+
+      p {
+        @apply text-sm text-gray-400;
+        contain: layout style;
+
+        .signup-link {
+          @apply font-medium;
+          color: #ff8f42;
+          @include smooth-transition;
+          @include hardware-acceleration;
+          &:hover {
+            color: #ff7a2d;
+            transform: translateY(-1px) translateZ(0);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Performance optimizations
+.login-page,
+.login-box,
+.logo-wrapper,
+.submit-button,
+.toggle-password,
+.forgot-link,
+.signup-link {
+  contain: layout style paint;
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+.login-box {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// Responsive optimizations
+@media (max-width: 640px) {
+  .login-box {
+    @apply px-4;
+  }
+  
+  .logo-wrapper img {
+    @apply h-32;
+  }
+}

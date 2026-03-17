@@ -1,0 +1,67 @@
+// Estilos da tela de Splash
+.splash-page {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%);
+  height: 100vh;
+  overflow: hidden;
+
+  ion-content::part(background) {
+    background-image: url('@/assets/imagem/BC1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+  }
+  
+  .splash-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: -5rem;
+    margin-bottom: 1rem;
+
+    .logo {
+      height: 10rem;
+      width: auto;
+    }
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin: 1.5rem 0;
+    
+    @media (min-width: 640px) {
+      font-size: 1.875rem;
+    }
+  }
+
+  .loading-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .loading-text {
+    margin-top: 1rem;
+    color: #d1d5db;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  ion-spinner {
+    width: 3rem;
+    height: 3rem;
+    --color: #ff8f42;
+  }
+}

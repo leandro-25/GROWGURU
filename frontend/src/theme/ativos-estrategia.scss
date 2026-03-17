@@ -1,0 +1,2906 @@
+// =============================================================================
+// ATIVOS ESTRATÉGIA - OPTIMIZED SCSS
+// Mantém UI idêntica com performance otimizada
+// Cuidado máximo: Tab, espaçamentos e botão flutuante preservados
+// =============================================================================
+
+// Variáveis de cores baseadas na paleta fornecida
+$fundo-principal: #111827;
+$texto-principal: #F9FAFB;
+$elementos-primarios: #3B82F6;
+$elementos-secundarios: #22C55E;
+$acentos-destaques: #F59E0B;
+$divisores-bordas: #374151;
+
+// Cores adicionais
+$cor-erro: #EF4444;
+
+// Performance mixins (mínimas, sem afetar layout)
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Botão flutuante com menu de ações - PRESERVADO EXATAMENTE */
+.floating-actions {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  @include hardware-acceleration;
+}
+
+.fab-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $elementos-primarios;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  @include smooth-transition;
+  @include hardware-acceleration;
+
+  &:active {
+    transform: scale(0.95) translateZ(0);
+    background: darken($elementos-primarios, 10%);
+  }
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  @include smooth-transition;
+  @include hardware-acceleration;
+  pointer-events: none;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 10px;
+
+  &.show-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) translateZ(0);
+    pointer-events: auto;
+  }
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: $fundo-principal;
+  @include smooth-transition;
+  @include hardware-acceleration;
+  border: 1px solid $divisores-bordas;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: $texto-principal;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px) translateZ(0);
+    background: lighten($fundo-principal, 10%);
+  }
+
+  &:active {
+    transform: scale(0.98) translateZ(0);
+  }
+
+  ion-icon {
+    font-size: 18px;
+    color: $elementos-primarios;
+  }
+}
+
+$cor-sucesso: #10B981; // Verde para sucesso
+$cor-aviso: #F59E0B; // Amarelo para avisos
+$cor-info: #3B82F6; // Azul para informações
+
+// Cores adicionais
+$cor-erro: #EF4444; // Vermelho para erros
+$cor-sucesso: #10B981; // Verde para sucesso
+$cor-aviso: #F59E0B; // Amarelo para avisos
+$cor-info: #3B82F6; // Azul para informações
+
+// Efeito de desfoque quando o menu está aberto
+.ativos-page.menu-open {
+  .content-container {
+    filter: blur(4px);
+    transition: filter 0.3s ease;
+    pointer-events: none; // Impede interação com o conteúdo desfocado
+  }
+  
+  .floating-menu {
+    z-index: 1001; // Garante que o menu fique acima do desfoque
+  }
+}
+
+// Estilos para o formulário
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0;
+  
+  .form-input {
+    width: 100%;
+    margin: 0;
+    --background: transparent;
+    --border-color: #374151;
+    --border-radius: 12px;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --highlight-color-focused: #3B82F6;
+    
+    ion-label {
+      color: #9CA3AF;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 16px; /* Increased from 14px */
+      
+      &[position="floating"] {
+        font-size: 18px; /* Slightly larger for floating labels */
+      }
+    }
+    
+    ion-input {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      --background: rgba(255, 255, 255, 0.05);
+      --color: #F9FAFB;
+      border-radius: 12px;
+      border: 1px solid #374151;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      margin-top: 8px;
+      
+      &:focus-within {
+        --background: rgba(255, 255, 255, 0.1);
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+      }
+      
+      &.ion-valid {
+        border-color: #10B981;
+      }
+      
+      &.ion-invalid {
+        border-color: #EF4444;
+      }
+    }
+  }
+}
+
+// Estilos para inputs personalizados
+.custom-input {
+  --background: rgba(255, 255, 255, 0.05);
+  --color: #F9FAFB;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 8px;
+  --border-radius: 12px;
+  --border-color: #374151;
+  --border-style: solid;
+  --border-width: 1px;
+  --placeholder-color: #9CA3AF;
+  --placeholder-opacity: 0.8;
+  margin: 8px 0;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  
+  &:focus-within {
+    --background: rgba(255, 255, 255, 0.1);
+    --border-color: #3B82F6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  }
+  
+  &.ion-valid {
+    --border-color: #10B981;
+  }
+  
+  &.ion-invalid {
+    --border-color: #EF4444;
+  }
+  
+  .native-input {
+    padding: 12px 0 !important;
+  }
+}
+
+// Estilo para os labels flutuantes
+ion-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-border-width: 0;
+  --min-height: auto;
+  margin-bottom: 16px;
+  
+  ion-label {
+    color: #9CA3AF;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    transform: none;
+    transition: all 0.3s ease;
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-left: 0;
+    
+    &.label-floating {
+      transform: translateY(0) scale(0.9);
+      margin-left: 0;
+    }
+  }
+  
+  &.item-has-focus ion-label {
+    color: #3B82F6;
+  }
+  
+  &.item-has-value:not(.item-input) ion-label {
+    transform: translateY(0) scale(0.9);
+    margin-left: 0;
+  }
+}
+
+// Estilos para o container de cards
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Estilos para o card de ativo
+.ativo-card {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  
+  /* Glassmorphism overlay effect */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: -1;
+    border-radius: 16px;
+  }
+  
+  /* Hover effect */
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  ion-card-header {
+    padding-bottom: 8px;
+    
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      
+      .titulo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        
+        ion-icon {
+          color: var(--ion-color-primary);
+        }
+      }
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      
+      .tipo-badge {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      
+      .preco-atual {
+        font-weight: 600;
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+  
+  ion-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    
+    .compra-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      ion-item {
+        --background: transparent;
+        --padding-start: 0;
+        --inner-padding-end: 0;
+        margin-bottom: 8px;
+      }
+      
+      .comprar-btn {
+        margin-top: auto;
+      }
+    }
+    margin: 0;
+  }
+}
+
+// Estilos para o cabeçalho do card
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  
+  /* Efeito de brilho sutil */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+    transition: 0.6s;
+  }
+  
+  &:hover::after {
+    left: 100%;
+  }
+}
+
+// Estilos para informações do ativo
+.asset-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.asset-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.asset-details {
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-text-color);
+  }
+  
+  .asset-type {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium);
+    margin-top: 2px;
+    display: block;
+  }
+}
+
+// Estilos para o badge de posição
+.position-badge {
+  --background: var(--ion-color-primary);
+  --color: white;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+// Estilos para a seção de preço
+.price-section {
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.current-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  
+  .label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .value {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+// Container de cards
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Estilos para o card de ativo
+.ativo-card {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  
+  /* Efeito de vidro fosco */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: -1;
+    border-radius: 16px;
+  }
+  
+  /* Efeito de hover */
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  ion-card-header {
+    padding-bottom: 8px;
+    
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      
+      .titulo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        
+        ion-icon {
+          color: var(--ion-color-primary);
+        }
+      }
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      
+      .tipo-badge {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      
+      .preco-atual {
+        font-weight: 600;
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+  
+  ion-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    
+    .compra-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      ion-item {
+        --background: transparent;
+        --padding-start: 0;
+        --inner-padding-end: 0;
+        margin-bottom: 8px;
+      }
+      
+      .comprar-btn {
+        margin-top: auto;
+      }
+    }
+    margin: 0;
+  }
+}
+
+// Cabeçalho do card
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  
+  /* Efeito de brilho sutil */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+    transition: 0.6s;
+  }
+  
+  &:hover::after {
+    left: 100%;
+  }
+}
+
+// Informações do ativo
+.asset-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.asset-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  ion-icon {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.asset-details {
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-text-color);
+  }
+  
+  .asset-type {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium);
+    margin-top: 2px;
+    display: block;
+  }
+}
+
+// Badge de posição
+.position-badge {
+  --background: var(--ion-color-primary);
+  --color: white;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+// Seção de preço
+.price-section {
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.1);
+  
+  .current-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    
+    .label {
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+    }
+    
+    .value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ion-text-color);
+    }
+  }
+  
+  .price-change {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    
+    .up {
+      color: $cor-sucesso;
+    }
+    
+    .down {
+      color: $cor-erro;
+    }
+  }
+}
+
+// Conteúdo do card
+.card-content {
+  padding: 16px 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  
+  .total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    
+    .total-amount {
+      font-weight: 700;
+      color: var(--ion-color-primary);
+      font-size: 1.1rem;
+    }
+  }
+  
+  .buy-button {
+    --background: var(--ion-color-primary);
+    --background-hover: var(--ion-color-primary-shade);
+    --background-activated: var(--ion-color-primary-tint);
+    --color: white;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    font-weight: 600;
+    margin-top: auto;
+    
+    ion-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Estilos para a barra de abas personalizada
+.custom-tab-bar {
+  --background: #111827;
+  --color: #F9FAFB;
+  --border-color: #374151;
+  padding: 5px 0;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  
+  ion-tab-button {
+    --color: #a0aec0;
+    --color-selected: #10dc60;
+    --background-focused: rgba(16, 220, 96, 0.1);
+    position: relative;
+    overflow: visible;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 50%;
+      height: 3px;
+      background: #10dc60;
+      transition: transform 0.3s ease;
+      border-radius: 0 0 4px 4px;
+    }
+    
+    &.tab-selected {
+      color: #10dc60;
+      
+      &::before {
+        transform: translateX(-50%) scaleX(1);
+      }
+    }
+    
+    ion-label {
+      font-size: 0.75rem;
+      margin-top: 4px;
+    }
+    
+    ion-icon {
+      font-size: 1.25rem;
+    }
+  }
+  
+  // Estilo especial para a aba de Estratégias
+  .estrategias-tab-selected {
+    --color: #10dc60;
+    --color-selected: #10dc60;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 3px;
+      background: #10dc60;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+}
+
+// Estilos para o conteúdo da página
+.ativos-page {
+  // Garante que o conteúdo não fique escondido atrás da tab bar
+  ion-content {
+    --padding-bottom: 400px; /* Aumentado MUITO para garantir espaço */
+    --background: linear-gradient(135deg, rgba(11, 15, 26, 0.9) 0%, rgba(17, 24, 39, 0.95) 100%);
+    background: var(--background);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  // Responsividade
+  @media (max-width: 768px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    
+    .content-container {
+      padding: 16px 16px 400px; /* Aumentado MUITO o padding-bottom */
+      gap: 16px;
+    }
+    
+    .card-header {
+      padding: 16px;
+    }
+    
+    .card-content {
+      padding: 12px 16px 16px;
+    }
+  }
+}
+
+// Estilos para o menu flutuante
+.floating-menu {
+  position: fixed;
+  bottom: 24px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.menu-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, background-color 0.2s;
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  .menu-icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    transition: transform 0.3s ease;
+    
+    .line {
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: white;
+      left: 0;
+      transition: all 0.3s ease;
+      
+      &.line-1 { top: 6px; }
+      &.line-2 { top: 11px; }
+      &.line-3 { top: 16px; }
+    }
+  }
+  
+  &.menu-open {
+    .line-1 {
+      transform: translateY(5px) rotate(45deg);
+    }
+    .line-2 {
+      opacity: 0;
+    }
+    .line-3 {
+      transform: translateY(-5px) rotate(-45deg);
+    }
+  }
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  
+  &.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: none;
+    border-radius: 28px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, background-color 0.2s;
+    position: relative;
+    overflow: hidden;
+    
+    &:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .menu-icon {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+  }
+}
+
+// Efeito ripple
+.ripple {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, transparent 10.1%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+  }
+  
+  &:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+  }
+}
+
+// Melhorias para telas maiores
+@media (min-width: 768px) {
+  .floating-menu {
+    bottom: 32px;
+    right: 32px;
+  }
+}
+
+// Estilos específicos para a página de ativos da estratégia
+// Estilos para o cabeçalho - PADRONIZADO COM ESTRATÉGIAS
+ion-header {
+  margin-top: 20px;
+  
+  &::after {
+    display: none; // Remove a borda inferior padrão
+  }
+  
+  ion-toolbar {
+    --background: rgba(17, 24, 39, 0.7); // Fundo semi-transparente
+    --color: #{$texto-principal};
+    --border-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      position: relative;
+      
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        z-index: 1;
+        
+        .logo-image {
+          width: 48px;
+          height: 48px;
+          object-fit: contain;
+        }
+        
+        .brand-text {
+          display: flex;
+          align-items: center;
+          
+          .brand-bold {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #{$texto-principal};
+          }
+        }
+      }
+      
+      // Texto centralizado absoluto com espaço otimizado
+      .brand-text.centered {
+        position: absolute;
+        left: 80px; // Posição após a logo (48px + 12px + 16px + 4px)
+        right: 16px;
+        transform: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        
+        .brand-bold {
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: #{$texto-principal};
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.ativos-page {
+  background-color: $fundo-principal;
+  color: $texto-principal;
+  min-height: 100vh;
+  
+  // Adiciona margem superior ao cabeçalho
+  ion-header {
+    margin-top: 20px;
+  }
+  
+  // Remove todos os efeitos de clique e movimento
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    touch-action: manipulation;
+    
+    &, &:active, &:focus, &:hover {
+      transform: none !important;
+      transition: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }
+  
+  // Permite seleção apenas em inputs e textareas
+  input, textarea, [contenteditable] {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+  
+  // Adicionando a imagem de fundo
+  ion-content::part(background) {
+    background-image: url('../assets/imagem/BC1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3; // Ajuste a opacidade conforme necessário
+  }
+
+  ion-header ion-toolbar {
+    --background: #{$fundo-principal};
+    --color: #{$texto-principal};
+    --border-color: #{$divisores-bordas};
+  }
+
+  ion-content {
+    --background: transparent;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --padding-top: 20px;
+    --padding-bottom: 150px; /* Aumentado significativamente para dar mais espaço */
+    --ion-safe-area-bottom: 120px; /* Aumentado para garantir que o conteúdo não fique atrás da navbar */
+    padding-bottom: calc(150px + constant(safe-area-inset-bottom)); /* Para iOS 11.2+ */
+    padding-bottom: calc(150px + env(safe-area-inset-bottom)); /* Para iOS 11.2+ */
+    
+    /* Garante que o scroll vá até o final do conteúdo */
+    --overflow: auto;
+    --overflow-y: auto;
+    --overflow-x: hidden;
+  }
+
+  // Container de conteúdo
+  .content-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 0;
+    
+    // Grid de cards
+    .cards-grid {
+      display: grid;
+      padding-bottom: 200px; /* Aumentado MUITO o espaço extra após os cards */
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+     // padding: 0.75rem 0;
+      
+      @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+      }
+      
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+    
+    .card-wrapper {
+      width: 100%;
+      
+      // Remove efeito de clique
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      
+      // Remove highlight no iOS
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+
+  // Estilo para os cards com glassmorphism aprimorado
+  ion-card {
+    margin: 0;
+    height: 100%;
+    position: relative;
+    background: rgba(17, 24, 39, 0.15);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    --transition: none !important;
+    transition: none !important;
+    transform: none !important;
+    contain: layout style;
+    
+    // Remove todos os efeitos de interação
+    &, &:active, &:focus, &:hover {
+      transform: none !important;
+      transition: none !important;
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1) !important;
+      outline: none !important;
+    }
+    
+    // Remove highlight no iOS
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    
+    // Remove efeito de clique do Ionic
+    --background-hover: transparent;
+    --background-activated: transparent;
+    --background-focused: transparent;
+    
+    // Fundo com gradiente estático
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    // Linha sutil no topo
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1;
+    }
+
+    .card-header {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      
+      .asset-info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        
+        .asset-details {
+          h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: $texto-principal;
+            line-height: 1.2;
+          }
+          
+          .asset-type {
+            font-size: 0.75rem;
+            color: rgba($texto-principal, 0.7);
+            display: block;
+            margin-top: 2px;
+          }
+        }
+      }
+      
+      .position-badge {
+        background: #F97316; /* Laranja vibrante do esquema de cores */
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3);
+        transition: all 0.2s ease;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 3px 6px rgba(249, 115, 22, 0.4);
+        }
+      }
+    }
+
+    ion-card-content {
+      padding: 12px 16px;
+      
+      .current-price {
+        margin: 0 20px 16px; /* Aumentei a margem lateral de 12px para 20px */
+        padding: 0 12px; /* Aumentei o padding lateral de 4px para 12px */
+        width: calc(100% - 40px); /* Garante que a largura se ajuste às novas margens */
+        box-sizing: border-box; /* Garante que o padding não afete a largura total */
+      
+        .label {
+          display: block;
+          font-size: 0.75rem;
+          color: rgba($texto-principal, 0.7);
+          margin-bottom: 6px; /* Aumentei um pouco o espaçamento inferior */
+        }
+      
+        .value {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: $texto-principal;
+          display: block;
+          padding: 6px 0; /* Aumentei o padding vertical para melhor respiração */
+        }
+      }
+      
+      .total-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 16px 0;
+        padding: 12px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        span {
+          color: white !important;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+        
+        .total-amount {
+          color: white !important;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+      }
+      
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 16px;
+        
+        ion-item {
+          --min-height: 80px;
+          
+          ion-label {
+            font-size: 16px !important;
+            --color: #F9FAFB;
+            transform: none !important;
+            margin-bottom: 8px;
+          }
+          
+          ion-input {
+            --padding-top: 12px;
+            --padding-bottom: 12px;
+            font-size: 18px !important;
+          }
+        }
+      }
+      
+      .total-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0;
+        padding: 14px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        span {
+          font-size: 1.1rem;
+          color: $texto-principal;
+        }
+        
+        .total-amount {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: $elementos-secundarios;
+        }
+      }
+      
+      .buy-button {
+  --background: #16A34A;
+  --background-hover: #16A34A;
+  --background-activated: #16A34A;
+  --background-focused: #16A34A;
+  --color: white;
+  --border-radius: 8px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  margin: 0;
+  height: 42px;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  --box-shadow: none;
+  --transition: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  
+  // Efeito hover removido
+  
+  &:active {
+    --background: var(--background-activated);
+    transform: translateY(0);
+  }
+  
+  ion-icon {
+    font-size: 1.2em;
+    margin-right: 8px;
+  }
+        
+        &:active {
+          --background: var(--background-activated);
+          transform: translateY(0);
+        }
+        
+        ion-icon {
+          font-size: 1.1rem;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+
+
+  
+  
+  /* Menu Flutuante */
+  .floating-menu {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .menu-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--ion-color-primary);
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    position: relative;
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      position: relative;
+      
+      .line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        position: absolute;
+        left: 0;
+        
+        &.line-1 {
+          top: 0;
+        }
+        
+        &.line-2 {
+          top: 8px;
+          opacity: 1;
+        }
+        
+        &.line-3 {
+          top: 16px;
+        }
+      }
+    }
+    
+    &.menu-open {
+      .line-1 {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      
+      .line-2 {
+        opacity: 0;
+      }
+      
+      .line-3 {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+  }
+  
+  .menu-items {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      background: var(--ion-color-light);
+      color: var(--ion-color-dark);
+      border: none;
+      border-radius: 50px;
+      padding: 12px 22px 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      
+      &:hover {
+        transform: translateX(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+      
+      .menu-icon {
+        margin-right: 10px;
+        font-size: 1.2rem;
+        color: var(--ion-color-primary);
+        min-width: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+  
+  /* Animações */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  // Estilo para os botões
+  ion-button {
+    --background: $elementos-primarios;
+    --background-hover: darken($elementos-primarios, 10%);
+    --color: white;
+    --border-radius: 8px;
+    font-weight: 500;
+    text-transform: none;
+    margin: 8px 0;
+    
+    // Estilo específico para o botão Comprar
+    &.comprar-btn {
+      --background: #22C55E; // Verde
+      --background-hover: #16a34a; // Verde mais escuro para hover
+      --background-activated: #15803d; // Verde ainda mais escuro para estado ativo
+      --color: white;
+      margin-top: auto;
+    }
+  }
+
+  // Estilo para o botão de voltar
+  ion-back-button {
+    --color: $texto-principal;
+  }
+
+
+  // Estilos de input removidos
+
+  // Estilo para os badges
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .position-badge {
+      --background: $elementos-secundarios;
+      --color: $texto-principal;
+      font-weight: 600;
+      padding: 6px 10px;
+      margin: 0;
+      border-radius: 12px;
+    }
+
+    .news-button {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      --color: #F9FAFB;
+      --background: $elementos-primarios;
+      --background-hover: darken($elementos-primarios, 10%);
+      --background-activated: darken($elementos-primarios, 15%);
+      --border-radius: 14px;
+      --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: none;
+      margin: 0;
+      height: 36px;
+      transition: all 0.2s ease;
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      ion-icon {
+        font-size: 1.1rem;
+        margin-right: 6px;
+      }
+
+      .button-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.3px;
+      }
+    }
+  }
+  
+  // Estilo para o preço
+  .preco-atual {
+    color: #F59E0B !important;
+    font-weight: 600;
+  }
+
+  // Estilo para o estado de carregamento
+  .loading-state, .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    text-align: center;
+    
+    ion-spinner {
+      --color: $elementos-primarios;
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: $texto-principal;
+      opacity: 0.8;
+      margin-top: 8px;
+    }
+  }
+
+  // Estilo para o header-row
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    
+    h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      ion-icon {
+        color: $elementos-primarios;
+    }
+  }
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Animações */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Estilo para os botões
+ion-button {
+  --background: $elementos-primarios;
+  --background-hover: darken($elementos-primarios, 10%);
+  --color: white;
+  --border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  margin: 8px 0;
+  
+  // Estilo específico para o botão Comprar
+  &.comprar-btn {
+    --background: #22C55E; // Verde
+    --background-hover: #16a34a; // Verde mais escuro para hover
+    --background-activated: #15803d; // Verde ainda mais escuro para estado ativo
+    --color: white;
+    margin-top: auto;
+  }
+}
+
+// Estilo para o botão de voltar
+ion-back-button {
+  --color: $texto-principal;
+}
+
+// Estilo para os badges
+ion-badge {
+  --background: $elementos-secundarios;
+  --color: $texto-principal;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+// Estilo para o preço
+.preco-atual {
+  color: #F59E0B !important;
+  font-weight: 600;
+}
+
+// Estilo para o estado de carregamento
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  text-align: center;
+  
+  ion-spinner {
+    --color: $elementos-primarios;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    color: $texto-principal;
+    opacity: 0.8;
+    margin-top: 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+  }
+
+  // Estilo para o formulário de compra
+  .compra-form {
+    margin-top: 16px;
+    padding-top: 16px;
+    
+    ion-item {
+      --background: transparent;
+      --border-color: transparent;
+      --padding-start: 0;
+      --inner-padding-end: 0;
+    }
+    
+    ion-button {
+      margin-top: 16px;
+      width: 100%;
+    }
+  }
+}
+
+// Estilos responsivos
+@media (max-width: 768px) {
+  .ativos-page {
+    ion-card {
+      margin: 8px 0;
+      
+      ion-card-header {
+        padding: 12px;
+      }
+      
+      ion-card-content {
+        padding: 12px;
+      }
+    }
+  }
+}
+
+/* Pseudo-elemento ::before para criar um overlay escuro sobre a imagem de fundo. */
+body::before {
+  content: "";                        /* Necessário para que o pseudo-elemento seja renderizado. */
+  position: fixed;                    /* Posicionamento fixo para cobrir toda a tela, mesmo com scroll. */
+  top: 0;                             /* Alinha no topo. */
+  left: 0;                            /* Alinha à esquerda. */
+  width: 100%;                        /* Largura total. */
+  height: 100%;                       /* Altura total. */
+  background-color: rgba(0, 0, 0, 0.85);/* Cor do overlay semi-transparente. */
+  z-index: -1;                        /* Coloca o overlay atrás do conteúdo do body. */
+}
+
+/* Classe container para centralizar o conteúdo e definir uma largura máxima. */
+.container {
+  width: 90%;                         /* Largura relativa à viewport. */
+  max-width: 1400px;                  /* Largura máxima do container. */
+  margin: 0 auto;                     /* Centraliza o container horizontalmente. */
+  padding: 0 15px;                    /* Espaçamento interno lateral. */
+}
+
+/* Estiliza o elemento <main> que também usa a classe .container. */
+main.container {
+  flex: 1;                            /* Faz o <main> ocupar todo o espaço vertical disponível (para sticky footer). */
+}
+
+/* Cabeçalho */
+header {
+  background: var(--glass-bg);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+header h1 .fa-bitcoin {
+  color: #f7931a;
+  margin-right: 0.5rem;
+  font-size: 1.3em;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Controles */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: var(--glass-bg);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0 2rem 0;
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
+}
+
+.search-container {
+  display: flex;
+  flex: 1;
+  max-width: 500px;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  background-color: #f0f0f0;
+  color: #1a1a2e;
+}
+
+#searchBtn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#searchBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+.refresh-container {
+  display: flex;
+  gap: 1rem;
+}
+
+#refreshBtn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#refreshBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+#currencySelect {
+  padding: 0.85rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background-color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #1a1a2e;
+}
+
+/* Grid de Criptomoedas */
+.crypto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Estilização individual de cada card de criptomoeda com efeito Glassmorphism. */
+.crypto-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  padding: 1.5rem;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed), border-color var(--transition-speed);
+  overflow: hidden;
+  word-break: break-word;
+  color: var(--text-color);
+}
+
+.crypto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-shadow);
+  background: var(--card-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.crypto-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.crypto-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+  border-radius: 50%;
+}
+
+.crypto-name {
+  flex: 1;
+}
+
+.crypto-name h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.crypto-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.75rem 0;
+  word-break: break-word;
+}
+
+.crypto-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  color: var(--neutral);
+  margin-bottom: 0.5rem;
+}
+
+.detail-value {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.price-change {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+.positive {
+  color: var(--positive);
+}
+
+.negative {
+  color: var(--negative);
+}
+
+/* Indicador de Carregamento */
+.loading {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--accent-color);
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Container de Erro */
+.error-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.error-container i {
+  font-size: 3rem;
+  color: var(--negative);
+  margin-bottom: 1rem;
+}
+
+#errorMessage {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+#retryBtn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.85rem 2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#retryBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Rodapé */
+footer {
+  background-color: var(--glass-bg);
+  color: white;
+  padding: 1.5rem 0;
+  text-align: center;
+  margin-top: 2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--glass-border);
+}
+
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para o Modal de Gráficos estilo TradingView */
+.chart-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.chart-modal-content {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #d1d4dc;
+  margin: 2% auto;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  width: 95%;
+  max-width: 1400px;
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chart-close {
+  color: #d1d4dc;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.chart-close:hover {
+  color: #ffffff;
+}
+
+.chart-modal .chart-container {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  background-color: rgba(19, 23, 34, 0.8);
+  border-radius: var(--border-radius);
+  padding: 10px;
+}
+
+.chart-modal .chart-header .chart-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+}
+
+.chart-modal .chart-header .chart-controls select,
+.chart-modal .chart-header .chart-controls button {
+  padding: 0.85rem 1.5rem;
+  border: 1px solid #363a45;
+  border-radius: var(--border-radius);
+  background-color: #2a2e39;
+  color: #d1d4dc;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.chart-modal .chart-header .chart-controls select:hover,
+.chart-modal .chart-header .chart-controls button:hover {
+  background-color: #363a45;
+}
+
+#chartTitle {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #d1d4dc;
+}
+
+.chart-modal .chart-header .chart-controls .indicator-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #2a2e39;
+  border: 1px solid #363a45;
+  border-radius: var(--border-radius);
+  padding: 10px;
+  z-index: 10;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chart-modal .chart-header .chart-controls .indicator-option {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.chart-modal .chart-header .chart-controls .indicator-option input {
+  margin-right: 8px;
+}
+
+.chart-info {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: rgba(19, 23, 34, 0.8);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+}
+
+#chartStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #787b86;
+}
+
+.stat-value {
+  font-weight: 600;
+}
+
+.chart-btn {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  margin-top: 15px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background-color var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.chart-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Modal de gráficos genérico (não TradingView) */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  width: 90%;
+  max-width: 1200px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #f0f0f0;
+  font-size: 1.5rem;
+}
+
+.modal .modal-header .chart-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+}
+
+.modal .modal-header .chart-controls select {
+  padding: 8px 12px;
+  background-color: #2a2e39;
+  color: #f0f0f0;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.modal .chart-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  height: 500px;
+  position: relative;
+}
+
+.indicators-btn {
+  padding: 0.85rem 1.5rem;
+  background-color: #2a2e39;
+  color: #f0f0f0;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.modal .chart-container .indicators-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 50px;
+  background-color: #2a2e39;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal .chart-container .indicator-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #f0f0f0;
+}
+
+.chart-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #f0f0f0;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Controles de Zoom (geralmente para gráficos). */
+.zoom-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+
+.zoom-controls button {
+  background-color: rgba(42, 46, 57, 0.7);
+  border: 1px solid rgba(121, 151, 181, 0.5);
+  border-radius: var(--border-radius);
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+}
+
+.zoom-controls button:hover {
+  background-color: rgba(42, 46, 57, 0.9);
+  border-color: rgba(121, 151, 181, 0.8);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .crypto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  header h1 {
+    font-size: 2.2rem;
+  }
+  header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .crypto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .crypto-card {
+    padding: 1.2rem;
+  }
+  .crypto-price {
+    font-size: 1.3rem;
+  }
+  .modal .chart-container,
+  .chart-modal .chart-container {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    top: 0.5rem;
+  }
+  .search-container {
+    max-width: 100%;
+  }
+  .refresh-container {
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+  #refreshBtn {
+    flex: 1;
+  }
+  .crypto-grid {
+    grid-template-columns: 1fr;
+  }
+  header h1 {
+    font-size: 1.8rem;
+  }
+  header p {
+    font-size: 0.9rem;
+  }
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .chart-modal .chart-header .chart-controls,
+  .modal .modal-header .chart-controls {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+  .chart-modal-content,
+  .modal-content {
+    height: 95vh;
+    width: 98%;
+    margin: 1% auto;
+    padding: 10px;
+  }
+  .modal-header {
+    padding: 1rem;
+  }
+  .modal-header h2 {
+    font-size: 1.2rem;
+  }
+  .chart-modal .chart-header .chart-controls select,
+  .chart-modal .chart-header .chart-controls button,
+  .modal .modal-header .chart-controls select,
+  .indicators-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+  .chart-modal .chart-header .chart-controls .indicator-menu,
+  .modal .chart-container .indicators-menu {
+    right: 0;
+    width: 200px;
+  }
+  #chartStats {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stat-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    width: 95%;
+    padding: 0 10px;
+  }
+  header {
+    padding: 1.5rem 0;
+  }
+  header h1 {
+    font-size: 1.6rem;
+  }
+  .controls {
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  #searchInput, #searchBtn, #refreshBtn, #currencySelect {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+  .refresh-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #currencySelect {
+    width: 100%;
+  }
+  .crypto-card {
+    padding: 1rem;
+  }
+  .crypto-header {
+    margin-bottom: 0.8rem;
+  }
+  .crypto-image {
+    width: 35px;
+    height: 35px;
+  }
+  .crypto-name h2 {
+    font-size: 1.1rem;
+  }
+  .crypto-price {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+  }
+  .crypto-details {
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .detail-label {
+    font-size: 0.8rem;
+  }
+  .detail-value {
+    font-size: 0.9rem;
+  }
+  .chart-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+  .modal .chart-container,
+  .chart-modal .chart-container {
+    height: 350px;
+    padding: 1rem;
+  }
+  footer {
+    padding: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .zoom-controls button {
+    height: 30px;
+    width: 30px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+  .crypto-image {
+    width: 30px;
+    height: 30px;
+  }
+  .crypto-name h2 {
+    font-size: 1rem;
+  }
+  .crypto-price {
+    font-size: 1.1rem;
+  }
+  .crypto-details {
+    grid-template-columns: 1fr;
+  }
+  .modal .chart-container,
+  .chart-modal .chart-container {
+    height: 300px;
+  }
+  .chart-modal .chart-header .chart-controls,
+  .modal .modal-header .chart-controls {
+    gap: 5px;
+  }
+  .chart-modal .chart-header .chart-controls select,
+  .chart-modal .chart-header .chart-controls button,
+  .modal .modal-header .chart-controls select,
+  .indicators-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 320px) {
+  header h1 {
+    font-size: 1.3rem;
+  }
+  header p {
+    font-size: 0.8rem;
+  }
+  #searchInput, #searchBtn, #refreshBtn, #currencySelect {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  .crypto-card {
+    padding: 0.8rem;
+  }
+  .modal .chart-container,
+  .chart-modal .chart-container {
+    height: 250px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1600px;
+  }
+  .crypto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+  header h1 {
+    font-size: 3rem;
+  }
+  header p {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  header {
+    padding: 1rem 0;
+  }
+  header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+  }
+  header p {
+    font-size: 0.8rem;
+  }
+  .controls {
+    margin-bottom: 1rem;
+  }
+  .modal .chart-container,
+  .chart-modal .chart-container {
+    height: 60vh; /* Ajustado para melhor visualização em paisagem */
+  }
+  .modal-content,
+  .chart-modal-content {
+    height: 90vh;
+  }
+  footer {
+    padding: 0.8rem 0;
+  }
+}
+
+// Estilos para o card flutuante de notícias
+.loading-news {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  
+  ion-spinner {
+    --color: $elementos-primarios;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin: 0;
+    color: rgba($texto-principal, 0.7);
+    font-size: 0.9rem;
+  }
+}
+
+.impact-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  
+  &.impact-positivo {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #22C55E;
+  }
+  
+  &.impact-negativo {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+  }
+  
+  &.impact-neutro {
+    background-color: rgba(156, 163, 175, 0.2);
+    color: #9CA3AF;
+  }
+}
+
+// Estilos para o card flutuante de notícias
+.news-card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-in-out;
+
+  .news-card {
+    background: $fundo-principal;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    border: 1px solid $divisores-bordas;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid $divisores-bordas;
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 1;
+
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: $texto-principal;
+      }
+
+      ion-button {
+        --padding-start: 8px;
+        --padding-end: 8px;
+        --color: $texto-principal;
+        --background-hover: rgba(255, 255, 255, 0.1);
+        --background-activated: rgba(255, 255, 255, 0.15);
+        margin: 0;
+        --border-radius: 50%;
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    &-content {
+      padding: 20px;
+      overflow-y: auto;
+      color: $texto-principal;
+      flex: 1;
+      background: rgba(17, 24, 39, 0.6);
+
+      p {
+        margin: 0;
+        color: rgba($texto-principal, 0.8);
+        text-align: center;
+        padding: 16px 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Estilos movidos para o componente

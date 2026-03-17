@@ -1,0 +1,408 @@
+// =============================================================================
+// TRANSACTIONS MODAL - OPTIMIZED SCSS
+// Mantém UI idêntica com performance otimizada
+// =============================================================================
+
+// Variáveis de cores do tema
+$fundo-principal: #111827;
+$texto-principal: #F9FAFB;
+$divisores-bordas: #374151;
+$cor-lucro: #22C55E;
+$cor-prejuizo: #EF4444;
+$cor-neutro: #9CA3AF;
+$acentos-destaques: #F59E0B;
+
+// Variáveis específicas do modal
+$modal-bg: rgba(31, 41, 55, 0.85);
+$text-primary: $texto-principal;
+$text-secondary: rgba($texto-principal, 0.7);
+$success: $cor-lucro;
+$danger: $cor-prejuizo;
+$warning: $acentos-destaques;
+
+// Performance mixins
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+// Estilo principal do Modal
+.transactions-modal {
+  --width: 90%;
+  --max-width: 500px;
+  --height: 80%;
+  --max-height: 600px;
+  --border-radius: 20px;
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  --margin-left: auto;
+  --margin-right: auto;
+  contain: layout style paint;
+  
+  // Estilo do fundo escurecido (backdrop)
+  &::part(backdrop) {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    will-change: opacity;
+  }
+
+  // Estilo do container do modal
+  &::part(content) {
+    background: $modal-bg;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    @include hardware-acceleration;
+    contain: layout style;
+  }
+}
+
+// Cabeçalho do modal
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid $divisores-bordas;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  @include hardware-acceleration;
+  contain: layout style;
+
+  .modal-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $text-primary;
+    contain: layout style;
+  }
+
+  .close-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include smooth-transition;
+    @include hardware-acceleration;
+    contain: layout style;
+    
+    ion-icon {
+      font-size: 1.6rem;
+      color: $cor-neutro;
+      transform: translateZ(0);
+    }
+
+    &:hover, &:focus {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: rotate(90deg) translateZ(0);
+    }
+  }
+}
+
+// Conteúdo rolável
+.transactions-content {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  contain: layout size style;
+  overflow-y: auto;
+  @include hardware-acceleration;
+  
+  // Melhor scroll performance
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  // Esconde a barra de rolagem
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Container da lista de transações
+.transactions-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: 0 20px;
+  scrollbar-width: none; /* Esconde a barra de rolagem no Firefox */
+  -ms-overflow-style: none; /* Esconde a barra de rolagem no IE e Edge */
+  
+  /* Esconde a barra de rolagem no WebKit (Chrome, Safari, etc) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Lista de transações
+.transactions-list {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none; /* Esconde a barra de rolagem no Firefox */
+  -ms-overflow-style: none; /* Esconde a barra de rolagem no IE e Edge */
+  
+  /* Esconde a barra de rolagem no WebKit (Chrome, Safari, etc) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  
+  /* Webkit scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Item individual de transação
+.transaction-item {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(55, 65, 81, 0.6); // Usando a cor de divisores
+  margin-bottom: 2px;
+  
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  
+  .transaction-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .transaction-icon {
+    font-size: 2.2rem !important; /* Tamanho original */
+    margin-right: 4px !important; /* Margem reduzida ao mínimo */
+    color: #F59E0B !important; // Cor âmbar fixa
+    --ionicon-stroke-width: 48px !important; /* Largura original do traço */
+    
+    /* Garantindo que nenhum outro estilo sobrescreva */
+    &, &.income, &.expense, &.ion-color, &.ion-color-base {
+      color: #F59E0B !important;
+      --ion-color-base: #F59E0B !important;
+      --ion-color-contrast: #F59E0B !important;
+    }
+  }
+  
+  .transaction-text {
+    flex-grow: 1;
+    width: 100%;
+    
+    .transaction-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      width: 100%;
+      
+      .transaction-type {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: $text-primary;
+        text-transform: capitalize;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 12px;
+      }
+      
+      .transaction-amount {
+        font-weight: 600;
+        font-size: 1rem;
+        white-space: nowrap;
+        margin-left: auto;
+        
+        &.income::before { content: "+"; }
+        &.income { color: $success; }
+        &.expense { color: $danger; }
+      }
+    }
+    
+    .transaction-description {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0;
+      font-size: 0.9rem;
+      color: $text-secondary;
+      
+      .transaction-amount {
+        margin-left: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+        
+        &.income::before { content: "+"; }
+        &.income { color: $success; }
+        &.expense { color: $danger; }
+      }
+    }
+
+    .transaction-type {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      color: $text-primary;
+      text-transform: capitalize;
+    }
+  }
+  
+  .transaction-description {
+    margin: 3px 0 8px 0;
+    font-size: 0.9rem;
+    color: $text-secondary;
+    line-height: 1.4;
+    
+    .transaction-amount {
+      display: none; /* Esconde o preço duplicado */
+    }
+  }
+
+  .transaction-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: 0.9rem;
+    color: $cor-neutro;
+    margin-top: 4px;
+    
+    .date-icon {
+        font-size: 1rem;
+    }
+  }
+}
+
+// Estado vazio
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: $cor-neutro;
+  @include hardware-acceleration;
+  contain: layout style;
+  
+  .empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    color: $warning;
+    transform: translateZ(0);
+  }
+}
+
+// Performance optimizations
+.transactions-modal,
+.modal-header,
+.close-button,
+.transactions-content,
+.transaction-item,
+.empty-state {
+  contain: layout style paint;
+}
+
+// Responsive optimizations
+@media (max-width: 768px) {
+  .transactions-modal {
+    --width: 92%;
+    --height: 85%;
+    --margin-left: auto;
+    --margin-right: auto;
+  }
+  
+  .modal-header {
+    padding: 12px 20px;
+  }
+  
+  .empty-state {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactions-modal {
+    --width: 90%;
+    --height: 90%;
+    --margin-left: auto;
+    --margin-right: auto;
+  }
+  
+  .modal-header {
+    padding: 10px 16px;
+  }
+}
+
+// Animações de entrada da lista
+.fade-list-move,
+.fade-list-enter-active,
+.fade-list-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-list-enter-from,
+.fade-list-leave-to {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+}
+
+.fade-list-leave-active {
+  position: absolute;
+  width: calc(100% - 40px); // Ajuste para a largura do padding
+}
+
+// Loading more indicator
+.loading-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  color: $cor-neutro;
+  
+  ion-spinner {
+    --color: #{$cor-neutro};
+  }
+}
