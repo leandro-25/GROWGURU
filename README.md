@@ -35,23 +35,16 @@ Um sistema completo de **simulação histórica** que testa estratégias de inve
 - **412 ativos** da B3 (ações, FIIs, BDRs)
 - **5 anos de dados históricos** (2020-2025)
 - **14 estratégias diferentes** testadas:
-  - **Momentum** - Compra ativos que estão subindo
-  - **Value** - Compra ações subvalorizadas (Magic Formula)
-  - **Dividendos** - Foca em pagadores de dividendos
-  - **Breakout** - Compra ações que quebraram resistências
-  - **RSI** - Usa o indicador técnico RSI
-  - **Quality** - Foca em empresas de alta qualidade
-  - **Híbridas** - Combinação de múltiplas estratégias
 
 #### 📊 Resultados das Estratégias (Backtest 5 anos)
 
 | Estratégia | Retorno | Sharpe |
 |------------|---------|--------|
-| Estratégia Athena (Quality) | **197.37%** | 1.26 |
-| Estratégia Croesus (Value 15) | **192.24%** | 1.16 |
-| Estratégia Aurum (Hybrid) | **192.24%** | 1.16 |
-| Estratégia Lakshmi (Dividendos) | **137.25%** | 0.75 |
-| Estratégia Plutus (Value 8) | **138.93%** | 0.75 |
+| Estratégia Athena | **197.37%** | 1.26 |
+| Estratégia Croesus | **192.24%** | 1.16 |
+| Estratégia Aurum | **192.24%** | 1.16 |
+| Estratégia Lakshmi | **137.25%** | 0.75 |
+| Estratégia Plutus | **138.93%** | 0.75 |
 | Benchmark IBOV | 50.01% | 0.22 |
 
 > 📈 As estratégias beataram o Ibovespa significativamente!
@@ -60,7 +53,7 @@ Um sistema completo de **simulação histórica** que testa estratégias de inve
 
 1. Coleta dados de preço e volume do Yahoo Finance
 2. Coleta dados fundamentalistas (P/L, ROE, dividend yield, etc.)
-3. Aplica filtros e rankings para selecionar os melhores ativos
+3. Aplica analises, filtros e rankings para selecionar os melhores ativos
 4. Simula uma carteira com rebalanceamento semanal/mensal
 5. Calcula retorno total e índice de Sharpe
 6. Salva os resultados no banco de dados (Supabase)
@@ -267,7 +260,6 @@ npm run test:e2e
 ## 📱 Deploy
 
 - **Backend**: Vercel ou Railway
-- **Frontend Web**: Vercel, Netlify
 - **App Android**: Capacitor (build nativo)
 
 ---
@@ -276,15 +268,7 @@ npm run test:e2e
 
 Este projeto foi desenvolvido para aplicar na prática conhecimentos de **Engenharia de Dados** (ETL, Python, Bancos Relacionais), **Análise de Dados** e consumo de APIs. O aplicativo Frontend foi construído para servir como interface visual de consumo para todo o ecossistema de dados gerado no backend.
 
----
 
-## 🎉 Contribuindo
-
-Quer contribuir com o projeto? Fique à vontade para fazer um fork e enviar Pull Requests!
-
----
-
-**Feito com ❤️ e muito ☕**
 
 ---
 
