@@ -17,7 +17,7 @@ O **GrowGuru** é um aplicativo móvel híbrido para quem quer organizar e acomp
 
 - 📊 **Ver sua carteira completa** - Tudo que você investiu, separado por estratégia
 - 💰 **Registrar compras e vendas** - Acompanhe cada transação
-- 📈 **Acompanhar rentabilidade** - See quanto seus investimentos estão rendendo
+- 📈 **Acompanhar rentabilidade** - Se quanto seus investimentos estão rendendo
 - 🎯 **Organizar por estratégias** - Agrupe seus ativos do jeito que preferir
 
 É como ter um guru pessoal te ajudando a fazer seu dinheiro crescer! 🌱
